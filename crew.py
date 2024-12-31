@@ -1,7 +1,12 @@
 from crewai import Crew, Process
 from agents import blog_researcher, blog_writer
 from tasks import research_task, write_task
+from dotenv import load_dotenv
+import os
+load_dotenv()
 
+api_key = os.getenv("OPENAI_API_KEY") 
+print(f"GROQ_API_KEY loaded: {api_key}")
 
 crew = Crew(
     agents=[blog_researcher, blog_writer],
