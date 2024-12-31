@@ -1,6 +1,14 @@
 from crewai import Agent
+from langchain_groq import ChatGroq
 from tools import yt_tool
+import os 
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
+# os.environ["GROQ_API_KEY"] = os.getenv("GROQ_API_KEY")
+api_key = os.getenv("GROQ_API_KEY")
 # Create a senior blog content researcher
 blog_researcher = Agent(
     role='Blog Researcher from Youtube videos',
@@ -14,6 +22,7 @@ blog_researcher = Agent(
 yt_tool
     ],
     allow_delegation=True,
+    llm=ChatGroq(groq_api_key=api_key, model_name="mixtral-8x7b-32768")
 ) 
 
 # Create a senior blog writer agent with Yotube tool
@@ -31,5 +40,6 @@ blog_writer=Agent(
         yt_tool
     ],
     allow_delegation=False,
+       llm=ChatGroq(groq_api_key=api_key, model_name="mixtral-8x7b-32768")
 )
 
